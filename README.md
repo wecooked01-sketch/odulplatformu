@@ -271,3 +271,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Tailwind CSS](https://tailwindcss.com/) for styling
 - [shadcn/ui](https://ui.shadcn.com/) for UI components
 - [Lucide](https://lucide.dev/) for icons
+
+Smoke test: verify Dependency Review workflow runs.
