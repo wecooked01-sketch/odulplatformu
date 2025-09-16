@@ -27,6 +27,7 @@ const eslintConfig = [
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-require-imports': 'warn',
       '@next/next/no-html-link-for-pages': 'warn',
+      'react/no-unescaped-entities': 'warn',
     },
   },
 ];
