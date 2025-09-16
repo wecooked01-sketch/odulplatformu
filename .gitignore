@@ -1,0 +1,37 @@
+# Node / Next.js
+node_modules/
+.npm/
+.pnpm-store/
+.next/
+out/
+dist/
+.next/cache/
+.next/static/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editors
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
+
+# Coverage
+coverage/
