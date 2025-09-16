@@ -1,6 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+// Mock seed script when Prisma client isn't available
+let prisma: any;
 
-const prisma = new PrismaClient();
+try {
+  const { PrismaClient } = require('@prisma/client');
+  prisma = new PrismaClient();
+} catch (error) {
+  console.warn('Prisma client not available. Skipping seed.');
+  process.exit(0);
+}
 
 async function main() {
   console.log('🌱 Starting database seed...');

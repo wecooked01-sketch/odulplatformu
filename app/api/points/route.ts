@@ -1,11 +1,10 @@
+import { auth } from "@/lib/auth/config";
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth/config';
 import { prisma } from '@/lib/prisma';
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -25,7 +24,7 @@ export async function GET(request: NextRequest) {
       take: 50,
     });
 
-    const totalPoints = transactions.reduce((sum, tx) => sum + tx.delta, 0);
+    const totalPoints = transactions.reduce((sum: number, tx: any) => sum + tx.delta, 0);
 
     return NextResponse.json({
       totalPoints,
@@ -42,7 +41,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     
     if (!session?.user?.email) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
