@@ -96,7 +96,7 @@ export default function SettingsPage() {
               <Input placeholder="@yourusername" />
             </div>
             <p className="text-sm text-muted-foreground">
-              After entering your username, you'll receive a verification message on Telegram.
+              After entering your username, you&apos;ll receive a verification message on Telegram.
             </p>
             <Button variant="outline">
               <Smartphone className="h-4 w-4 mr-2" />

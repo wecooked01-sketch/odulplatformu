@@ -63,7 +63,7 @@ export default function ContactsPage() {
               Send Message
             </CardTitle>
             <CardDescription>
-              Have a question or feedback? We'd love to hear from you.
+              Have a question or feedback? We&apos;d love to hear from you.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

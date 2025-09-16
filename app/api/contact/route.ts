@@ -2,10 +2,8 @@ import { auth } from "@/lib/auth/config";
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const session = await auth();
-    
     // For GET, allow both authenticated and anonymous users to view messages
     // (In a real app, you'd probably restrict this to admin users)
     
