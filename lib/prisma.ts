@@ -29,7 +29,7 @@ interface MockPrismaClient {
   $use: (...args: any[]) => void;
   $queryRaw: (...args: any[]) => PrismaPromise;
   $queryRawUnsafe: (...args: any[]) => PrismaPromise;
-  $extends: (...args: any[]) => any;
+  $extends: (...args: any[]) => { extArgs: any };
 }
 
 const createMockPrismaClient = (): MockPrismaClient => ({
@@ -52,7 +52,7 @@ const createMockPrismaClient = (): MockPrismaClient => ({
   $use: () => {},
   $queryRaw: () => prismaPromise(),
   $queryRawUnsafe: () => prismaPromise(),
-  $extends: () => ({}),
+  $extends: () => ({ extArgs: {} }),
 });
 
 let PrismaClient: any;
