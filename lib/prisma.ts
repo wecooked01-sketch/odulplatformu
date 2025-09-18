@@ -1,4 +1,13 @@
-// Mock Prisma client for development when the real client can't be generated
+interface PrismaPromise<T = any> extends Promise<T> {
+  [Symbol.toStringTag]: 'PrismaPromise';
+}
+
+const prismaPromise = <T = any>(value?: T): PrismaPromise<T> => {
+  const promise = Promise.resolve(value) as PrismaPromise<T>;
+  (promise as any)[Symbol.toStringTag] = 'PrismaPromise';
+  return promise;
+};
+
 interface MockPrismaClient {
   [key: string]: any;
   user: any;
@@ -14,35 +23,35 @@ interface MockPrismaClient {
   $disconnect: () => Promise<void>;
   $on: (...args: any[]) => MockPrismaClient;
   $connect: () => Promise<void>;
-  $executeRaw: (...args: any[]) => Promise<any>;
-  $executeRawUnsafe: (...args: any[]) => Promise<any>;
-  $transaction: (...args: any[]) => Promise<any>;
+  $executeRaw: (...args: any[]) => PrismaPromise;
+  $executeRawUnsafe: (...args: any[]) => PrismaPromise;
+  $transaction: (...args: any[]) => PrismaPromise;
   $use: (...args: any[]) => void;
-  $queryRaw: (...args: any[]) => Promise<any>;
-  $queryRawUnsafe: (...args: any[]) => Promise<any>;
+  $queryRaw: (...args: any[]) => PrismaPromise;
+  $queryRawUnsafe: (...args: any[]) => PrismaPromise;
   $extends: (...args: any[]) => any;
 }
 
 const createMockPrismaClient = (): MockPrismaClient => ({
-  user: { findUnique: () => Promise.resolve(null), create: () => Promise.resolve({}), upsert: () => Promise.resolve({}) },
-  account: { findUnique: () => Promise.resolve(null), create: () => Promise.resolve({}) },
-  session: { findUnique: () => Promise.resolve(null), create: () => Promise.resolve({}) },
-  verificationToken: { findUnique: () => Promise.resolve(null), create: () => Promise.resolve({}) },
-  pointTransaction: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
-  wheelSpin: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
-  lotteryTicket: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
-  reward: { findMany: () => Promise.resolve([]), findUnique: () => Promise.resolve(null), create: () => Promise.resolve({}), upsert: () => Promise.resolve({}) },
-  contactMessage: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
-  telegramVerification: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
+  user: { findUnique: () => prismaPromise(null), create: () => prismaPromise({}), upsert: () => prismaPromise({}) },
+  account: { findUnique: () => prismaPromise(null), create: () => prismaPromise({}) },
+  session: { findUnique: () => prismaPromise(null), create: () => prismaPromise({}) },
+  verificationToken: { findUnique: () => prismaPromise(null), create: () => prismaPromise({}) },
+  pointTransaction: { findMany: () => prismaPromise([]), create: () => prismaPromise({}) },
+  wheelSpin: { findMany: () => prismaPromise([]), create: () => prismaPromise({}) },
+  lotteryTicket: { findMany: () => prismaPromise([]), create: () => prismaPromise({}) },
+  reward: { findMany: () => prismaPromise([]), findUnique: () => prismaPromise(null), create: () => prismaPromise({}), upsert: () => prismaPromise({}) },
+  contactMessage: { findMany: () => prismaPromise([]), create: () => prismaPromise({}) },
+  telegramVerification: { findMany: () => prismaPromise([]), create: () => prismaPromise({}) },
   $disconnect: () => Promise.resolve(),
   $on: function() { return this; },
   $connect: () => Promise.resolve(),
-  $executeRaw: () => Promise.resolve(),
-  $executeRawUnsafe: () => Promise.resolve(),
-  $transaction: () => Promise.resolve(),
+  $executeRaw: () => prismaPromise(),
+  $executeRawUnsafe: () => prismaPromise(),
+  $transaction: () => prismaPromise(),
   $use: () => {},
-  $queryRaw: () => Promise.resolve(),
-  $queryRawUnsafe: () => Promise.resolve(),
+  $queryRaw: () => prismaPromise(),
+  $queryRawUnsafe: () => prismaPromise(),
   $extends: () => ({}),
 });
 
