@@ -1,5 +1,6 @@
 // Mock Prisma client for development when the real client can't be generated
 interface MockPrismaClient {
+  [key: string]: any; // BU SATIRI EKLE!
   user: any;
   account: any;
   session: any;
@@ -12,6 +13,7 @@ interface MockPrismaClient {
   telegramVerification: any;
   $disconnect: () => Promise<void>;
 }
+
 
 const createMockPrismaClient = (): MockPrismaClient => ({
   user: {
