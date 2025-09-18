@@ -11,6 +11,7 @@ interface MockPrismaClient {
   contactMessage: any;
   telegramVerification: any;
   $disconnect: () => Promise<void>;
+  [key: string]: any;
 }
 
 const createMockPrismaClient = (): MockPrismaClient => ({
