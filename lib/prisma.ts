@@ -1,4 +1,3 @@
-// Mock Prisma client for development when the real client can't be generated
 interface MockPrismaClient {
   [key: string]: any;
   user: any;
@@ -12,7 +11,7 @@ interface MockPrismaClient {
   contactMessage: any;
   telegramVerification: any;
   $disconnect: () => Promise<void>;
-  $on: (...args: any[]) => void;
+  $on: (...args: any[]) => MockPrismaClient; // chainable!
   $connect: () => Promise<void>;
   $executeRaw: (...args: any[]) => Promise<any>;
   $executeRawUnsafe: (...args: any[]) => Promise<any>;
@@ -20,7 +19,7 @@ interface MockPrismaClient {
   $use: (...args: any[]) => void;
   $queryRaw: (...args: any[]) => Promise<any>;
   $queryRawUnsafe: (...args: any[]) => Promise<any>;
-  $extends: (...args: any[]) => any; // <-- EKLENDİ!
+  $extends: (...args: any[]) => any;
 }
 
 const createMockPrismaClient = (): MockPrismaClient => ({
@@ -35,7 +34,7 @@ const createMockPrismaClient = (): MockPrismaClient => ({
   contactMessage: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
   telegramVerification: { findMany: () => Promise.resolve([]), create: () => Promise.resolve({}) },
   $disconnect: () => Promise.resolve(),
-  $on: () => {},
+  $on: function() { return this; }, // chainable, kendisini döner!
   $connect: () => Promise.resolve(),
   $executeRaw: () => Promise.resolve(),
   $executeRawUnsafe: () => Promise.resolve(),
@@ -43,27 +42,5 @@ const createMockPrismaClient = (): MockPrismaClient => ({
   $use: () => {},
   $queryRaw: () => Promise.resolve(),
   $queryRawUnsafe: () => Promise.resolve(),
-  $extends: () => ({}), // <-- EKLENDİ!
+  $extends: () => ({}),
 });
-
-// Try to import the real PrismaClient, fall back to mock if it fails
-let PrismaClient: any;
-let prisma: MockPrismaClient;
-
-try {
-  const PrismaModule = require('@prisma/client');
-  PrismaClient = PrismaModule.PrismaClient;
-  
-  const globalForPrisma = globalThis as unknown as {
-    prisma: any | undefined;
-  };
-
-  prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-} catch (error) {
-  console.warn('Using mock Prisma client. Run `pnpm prisma generate` to use the real client.');
-  prisma = createMockPrismaClient();
-}
-
-export { prisma };
