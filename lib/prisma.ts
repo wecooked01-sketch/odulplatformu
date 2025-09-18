@@ -44,3 +44,4 @@ const createMockPrismaClient = (): MockPrismaClient => ({
   $queryRawUnsafe: () => Promise.resolve(),
   $extends: () => ({}),
 });
+export {};
