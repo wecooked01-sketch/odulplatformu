@@ -20,6 +20,7 @@ interface MockPrismaClient {
   $use: (...args: any[]) => void;
   $queryRaw: (...args: any[]) => Promise<any>;
   $queryRawUnsafe: (...args: any[]) => Promise<any>;
+  $extends: (...args: any[]) => any; // <-- EKLENDİ!
 }
 
 const createMockPrismaClient = (): MockPrismaClient => ({
@@ -42,6 +43,7 @@ const createMockPrismaClient = (): MockPrismaClient => ({
   $use: () => {},
   $queryRaw: () => Promise.resolve(),
   $queryRawUnsafe: () => Promise.resolve(),
+  $extends: () => ({}), // <-- EKLENDİ!
 });
 
 // Try to import the real PrismaClient, fall back to mock if it fails
